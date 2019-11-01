@@ -14,7 +14,7 @@ var imageRe = regexp.MustCompile(`background-image:url(([^?]+)?[^)]*)`)
 func ParseProfile(contents []byte) engine.ParseResult{
 	profile := model.Profile{}
 
-	match := baseInfoRe.FindSubmatch(contents,-1)
+	match := baseInfoRe.FindSubmatch(contents)
     if match != nil{
 		baseInfo := string(match[1]);
 		infos := strings.Split(baseInfo,"|")
@@ -28,8 +28,8 @@ func ParseProfile(contents []byte) engine.ParseResult{
 		}
 	}
 
-	match = imageRe.FindAllSubmatch(contents,-1)
-	if match != null{
+	match2 := imageRe.FindAllSubmatch(contents,-1)
+	if match2 != nil{
 		for _,m := range match{
 			profile.Images = append(profile.Images,string(m[1]))
 		}
